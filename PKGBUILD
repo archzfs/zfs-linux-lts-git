@@ -17,24 +17,30 @@
 #
 pkgbase="zfs-linux-lts-git"
 pkgname=("zfs-linux-lts-git" "zfs-linux-lts-git-headers")
-_commit='0c763f76b1bc6d5e38a638493d13c9b54222743d'
-_zfsver="2020.12.21.r6475.g0c763f76b"
-_kernelver="5.4.85-1"
-_extramodules="5.4.85-1-lts"
+_commit='064c2cf40ea367f0b7608a3e8b537f87190f52cb'
+_zfsver="2020.12.30.r6489.g064c2cf40"
+_kernelver="5.4.86-1"
+_extramodules="5.4.86-1-lts"
 
 pkgver="${_zfsver}_$(echo ${_kernelver} | sed s/-/./g)"
 pkgrel=1
 makedepends=("linux-lts-headers=${_kernelver}" "git")
 arch=("x86_64")
 url="https://zfsonlinux.org/"
-source=("git+https://github.com/zfsonlinux/zfs.git#commit=${_commit}")
-sha256sums=("SKIP")
+source=("git+https://github.com/zfsonlinux/zfs.git#commit=${_commit}"
+              "autoconf-270-compatibility.patch")
+sha256sums=("SKIP"
+                        "dc82ee4e62f76b68d972423909c38ced28dea876c6ef4f19037a24a8dbb2fff5")
 license=("CDDL")
 depends=("kmod" "zfs-utils-git=${_zfsver}" "linux-lts=${_kernelver}")
+prepare() {
+    cd "${srcdir}/zfs"
+    patch -Np1 -i ${srcdir}/autoconf-270-compatibility.patch
+}
 
 build() {
     cd "${srcdir}/zfs"
-    ./autogen.sh
+    ./autogen.sh || true
     ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin --libdir=/usr/lib \
                 --datadir=/usr/share --includedir=/usr/include --with-udevdir=/usr/lib/udev \
                 --libexecdir=/usr/lib --with-config=kernel \
