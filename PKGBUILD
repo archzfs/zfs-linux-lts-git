@@ -17,8 +17,8 @@
 #
 pkgbase="zfs-linux-lts-git"
 pkgname=("zfs-linux-lts-git" "zfs-linux-lts-git-headers")
-_commit='064c2cf40ea367f0b7608a3e8b537f87190f52cb'
-_zfsver="2020.12.30.r6489.g064c2cf40"
+_commit='06346cc5b50bef7327f7c901b92cbadab7fd7265'
+_zfsver="2021.01.02.r6491.g06346cc5b"
 _kernelver="5.4.86-1"
 _extramodules="5.4.86-1-lts"
 
@@ -33,10 +33,6 @@ sha256sums=("SKIP"
                         "dc82ee4e62f76b68d972423909c38ced28dea876c6ef4f19037a24a8dbb2fff5")
 license=("CDDL")
 depends=("kmod" "zfs-utils-git=${_zfsver}" "linux-lts=${_kernelver}")
-prepare() {
-    cd "${srcdir}/zfs"
-    patch -Np1 -i ${srcdir}/autoconf-270-compatibility.patch
-}
 
 build() {
     cd "${srcdir}/zfs"
