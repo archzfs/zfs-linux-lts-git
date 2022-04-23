@@ -17,11 +17,11 @@
 #
 pkgbase="zfs-linux-lts-git"
 pkgname=("zfs-linux-lts-git" "zfs-linux-lts-git-headers")
-_commit='4d462729132be6b9a3c30af288fa1e85361c0f4a'
-_zfsver="2022.04.19.r7736.g4d46272913"
-_kernelver="5.15.34-1"
-_kernelver_full="5.15.34-1"
-_extramodules="5.15.34-1-lts"
+_commit='7eba3891e9d0c211a1650ecfdfc78c654be055f8'
+_zfsver="2022.04.22.r7766.g7eba3891e9"
+_kernelver="5.15.35-1"
+_kernelver_full="5.15.35-1"
+_extramodules="5.15.35-1-lts"
 
 pkgver="${_zfsver}_$(echo ${_kernelver} | sed s/-/./g)"
 pkgrel=1
@@ -52,7 +52,7 @@ package_zfs-linux-lts-git() {
     conflicts=("zfs-dkms" "zfs-dkms-git" "zfs-dkms-rc" "spl-dkms" "spl-dkms-git" 'zfs-linux-lts' 'spl-linux-lts-git' 'spl-linux-lts')
     replaces=("spl-linux-lts-git")
     cd "${srcdir}/zfs"
-    make DESTDIR="${pkgdir}" INSTALL_MOD_PATH=${pkgdir}/usr install
+    make DESTDIR="${pkgdir}" INSTALL_MOD_PATH=${pkgdir}/usr INSTALL_MOD_STRIP=1 install
     # Remove src dir
     rm -r "${pkgdir}"/usr/src
 }
